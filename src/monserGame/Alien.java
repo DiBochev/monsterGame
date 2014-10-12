@@ -1,24 +1,18 @@
 package monserGame;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Alien implements IMonster{
 
 	private int live;
-	private int damage;
+	private final int DAMAGE = 40;
 	private int[] position;
-	private final String MONSTERMARK = "À";
+	private final char MONSTERMARK = 'A';
 	private Random randomnNumber;
-	private ArrayList<Integer> usedPositionsRow;
-	private ArrayList<Integer> usedPositionsCol;
 	
 	public Alien(){
-		this.usedPositionsRow = new ArrayList<Integer>();
-		this.usedPositionsCol = new ArrayList<Integer>();
 		this.position = new int[2];
 		this.live = 200;
-		this.damage = 40;
 		this.randomnNumber = new Random();
 	}
 	
@@ -27,9 +21,17 @@ public class Alien implements IMonster{
 		return this.live;
 	}
 	
+	protected void setLife(int life){
+		this.live = life;
+	}
+	
+	public void	hit(int damage){
+		setLife(getLife() - damage);
+	}
+	
 	@Override
 	public int getDamage() {
-		return this.damage;
+		return this.DAMAGE;
 	}
 	
 	@Override
@@ -39,48 +41,20 @@ public class Alien implements IMonster{
 	
 	@Override
 	public void heal() {
-		if (randomnNumber.nextInt()/4 == 0) {
-			this.live += 60;
+		if (randomnNumber.nextInt(10)/4 == 0) {
+			this.live += 40;
+			System.err.println("Alien eat smth and now has: " + getLife() + " live");
 		}
 	}
 
 	@Override
 	public int[] generateNewCurrentPosition() {
-		do{
-			this.position[0] = randomnNumber.nextInt(10);
-			this.position[1] = randomnNumber.nextInt(10);
-		}while(checkNewPositions(position));
-		
-		setUsedPositionsRow(this.position[0]-1);
-		setUsedPositionsCol(this.position[1]-1);
+		this.position[0] = randomnNumber.nextInt(10);
+		this.position[1] = randomnNumber.nextInt(10);
 		return this.position;
 	}
-	
-	public boolean checkNewPositions(int [] Position){
-		if (this.usedPositionsRow.contains(Position[0]) || this.usedPositionsCol.contains(Position[1])) {
-			return true;
-		}else{
-			return false;
-		}
-	}
 
-	public String getMonsterMark() {
+	public char getMonsterMark() {
 		return MONSTERMARK;
-	}
-	
-	public ArrayList getUsedPositionsRow() {
-		return this.usedPositionsRow;
-	}
-
-	protected void setUsedPositionsRow(int usedPositionsRow) {
-		this.usedPositionsRow.add(usedPositionsRow);
-	}
-
-	public ArrayList getUsedPositionsCol() {
-		return this.usedPositionsCol;
-	}
-
-	protected void setUsedPositionsCol(int usedPositionsCol) {
-		this.usedPositionsCol.add(usedPositionsCol);
 	}
 }

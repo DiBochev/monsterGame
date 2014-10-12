@@ -1,39 +1,26 @@
 package monserGame;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class Map {
 	
-	private String[][] freePositon;
-	private final String FREEPOSITIONMARK = "-";
-	private final String USEDPOSITIONMARK = "=";
+	private char[][] freePositon;
+	private final char FREEPOSITIONMARK = '-';
+	private final char USEDPOSITIONMARK = '=';
+	private final int MATRIXSIZE = 10;
 	
 	Map(){
-		freePositon = new String [10][10];
-		for (int i = 0; i <10; i++) {
-			for (int j = 0; j < 10; j++) {
+		freePositon = new char [MATRIXSIZE][MATRIXSIZE];
+		for (int i = 0; i <MATRIXSIZE; i++) {
+			for (int j = 0; j < MATRIXSIZE; j++) {
 				freePositon [i][j] = this.FREEPOSITIONMARK;
 			}
 		}
 	}
 	
-	public String[][] getFreePositon() {
+	public char[][] getFreePositon() {
 		return this.freePositon;
 	}
 
-	public void setFreePositon(int row, int col) {	
-		this.freePositon [row][col] = this.USEDPOSITIONMARK;
-	}
-	
-	public void setUsedPosition (int[] Position){
-		this.freePositon[Position[0]][Position[1]] = this.USEDPOSITIONMARK;
-	}
-	
-	public void setCurrentPosition (int[] Position, String monster){
-		this.freePositon [Position[0]][Position[1]] = monster;
-	}
-	
 	public void showCurrentMap (){
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -42,11 +29,40 @@ public class Map {
 		}
 	}
 	
-	public boolean AreMonstersTogether(ArrayList<Integer> predatorRow, ArrayList<Integer> predatorCol, ArrayList<Integer> alienRow, ArrayList<Integer> alienCol){
-		if(Math.abs(predatorRow.get(predatorRow.size()-1) - alienRow.get(alienRow.size()-1)) == 1 || Math.abs(predatorCol.get(predatorCol.size()-1) - alienCol.size()-1) == 1){
-			return true;
-		}else {
-			throw new IllegalArgumentException("INVALID");
-		}
+	public void setUsedPosition (int[] position) {
+		setCurrentPosition(position, this.USEDPOSITIONMARK);
 	}
+	
+	public void setCurrentPosition (int[] position, char monster){
+			this.freePositon [position[0]][position[1]] = monster;
+	}
+	
+	public boolean CheckIsFreePosition(int[] position){
+		boolean result = true;
+		if (this.freePositon [position[0]][position[1]] == this.USEDPOSITIONMARK) {
+		}
+		else {
+			result = false;
+		}
+		return result;
+	}
+	
+	public boolean AreMonstersTogether(int[] predatorPosition, int[] alienPosition){
+		boolean result = false;
+		int rowDistance = Math.abs(predatorPosition[0] - alienPosition[0]);
+		int colDistance = Math.abs(predatorPosition[1] - alienPosition[1]);
+		if (rowDistance == 0 && colDistance == 0) {
+			result = true;
+		}
+		if(rowDistance == 0 && colDistance == 1){
+			result = true;
+		}
+		if (rowDistance == 1 && colDistance == 0) {
+			result = true;
+		}
+		return result;
+	}
+	
 }
+
+
