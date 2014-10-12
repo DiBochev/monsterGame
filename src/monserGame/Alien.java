@@ -40,11 +40,11 @@ public class Alien implements IMonster{
 	}
 	
 	@Override
-	public void heal() {
+	public boolean heal() {
 		if (randomnNumber.nextInt(10)/4 == 0) {
 			this.live += 40;
-			System.err.println("Alien eat smth and now has: " + getLife() + " live");
 		}
+		return true;
 	}
 
 	@Override

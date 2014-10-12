@@ -7,6 +7,7 @@ public class Main {
 		Alien alien = new Alien();
 		Map map = new Map();
 		map.showCurrentMap();
+		System.out.println("next step");
 		while(true){
 		monsterStep(predator, alien, map);
 		
@@ -53,8 +54,12 @@ public class Main {
 				System.out.println("Alien is dead, Predator has "+ predator.getLife() + " live");
 				break;
 			}
-			predator.heal();
-			alien.heal();
+			if(predator.heal()){
+				System.err.println("Predator eat smth and now has: " + predator.getLife() + " live");
+			}
+			if(alien.heal()){
+			System.err.println("Alien eat smth and now has: " + alien.getLife() + " live");
+			}
 		}
 	}
 	
