@@ -21,12 +21,14 @@ public class Map {
 		return this.freePositon;
 	}
 
-	public void showCurrentMap (){
+	public String showCurrentMap (){
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				System.out.print(this.freePositon[i][j]);
-			}System.out.println("");
+				sb.append(this.freePositon[i][j]);
+			}sb.append(System.getProperty("line.separator"));
 		}
+		return sb.toString();
 	}
 	
 	public void setUsedPosition (int[] position) {
