@@ -27,6 +27,8 @@ public class Main {
 		map.setUsedPosition(alien.getCurrentPosition());
 		}
 		writer.ConseleWrter();
+		writer.DBWriter(alien.getLife(), predator.getLife());
+		
 	}
 
 	private static void monsterStep(Predator predator, Alien alien, Map map) {
