@@ -2,23 +2,20 @@ package monserGame;
 
 import java.util.Random;
 
-public class Alien implements IMonster{
-
+public abstract class Monster implements IMonster {
+	
 	private int live;
 	private final int DAMAGE = 40;
 	private int[] position;
-	private final char MONSTERMARK = 'A';
+	private final char MONSTERMARK = 'P';
 	private Random randomnNumber;
 	
-	public Alien(){
-		this.position = new int[2];
-		this.live = 200;
-		this.randomnNumber = new Random();
-	}
-	
-	@Override
-	public int getLife() {
-		return this.live;
+	public boolean heal() {
+		if (randomnNumber.nextInt(10)/4 == 0) {
+			this.live += 40;
+		}
+		return true;
+
 	}
 	
 	protected void setLife(int life){
@@ -30,6 +27,11 @@ public class Alien implements IMonster{
 	}
 	
 	@Override
+	public int getLife() {
+		return this.live;
+	}
+	
+	@Override
 	public int getDamage() {
 		return this.DAMAGE;
 	}
@@ -38,19 +40,12 @@ public class Alien implements IMonster{
 	public int[] getCurrentPosition() {
 		return this.position;
 	}
-	
-	public boolean heal() {
-		if (randomnNumber.nextInt(10)/4 == 0) {
-			this.live += 40;
-		}
-		return true;
-	}
 
 	@Override
 	public int[] generateNewCurrentPosition() {
-		this.position[0] = randomnNumber.nextInt(10);
-		this.position[1] = randomnNumber.nextInt(10);
-		return this.position;
+			this.position[0] = randomnNumber.nextInt(10);
+			this.position[1] = randomnNumber.nextInt(10);
+			return this.position;
 	}
 
 	public char getMonsterMark() {

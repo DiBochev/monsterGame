@@ -3,31 +3,34 @@ package monserGame;
 public class Main {
 
 	public static void main(String[] args) {
+		StringBuilder output = new StringBuilder();
 		Predator predator = new Predator();
 		Alien alien = new Alien();
 		Map map = new Map();
-		Writer writer = new Writer();
-		writer.setPrinter(map.showCurrentMap());
-		writer.setPrinter("next step");
+		ConsoleWriter consoleWriter = new ConsoleWriter();
+		output.append(map.showCurrentMap());
+		output.append("next step\n");
 		while(true){
 		monsterStep(predator, alien, map);
 		
 		//show map and monsters current position
-		writer.setPrinter(map.showCurrentMap());
+		output.append(map.showCurrentMap());
 		
 		// fight
 		if(map.AreMonstersTogether(predator.getCurrentPosition(), alien.getCurrentPosition())){
-			writer.setPrinter(fight(predator, alien));
+			output.append(fight(predator, alien));
 			
 			break;
 		}
-		writer.setPrinter("next step");
+		output.append("next step\n");
 		
 		map.setUsedPosition(predator.getCurrentPosition());
 		map.setUsedPosition(alien.getCurrentPosition());
 		}
-		writer.ConseleWrter();
-		writer.DBWriter(alien.getLife(), predator.getLife());
+		
+		consoleWriter.setPrinter(output);
+		consoleWriter.Write();
+		DBWriter.DBWrite(alien.getLife(), predator.getLife());
 		
 	}
 

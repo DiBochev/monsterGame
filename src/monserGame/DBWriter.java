@@ -5,8 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Writer {
-	
+public final class DBWriter {
 	private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	private final static String DB_URL = "jdbc:mysql://localhost/monstergame";
 	private final static String USER = "fgg";
@@ -15,23 +14,6 @@ public class Writer {
 	private static Statement stmt = null;
 	private final static String TABLENAME = "monsters";
 	private final static String TABLEVALUES = " (AlienWin, PredatorWin, AlienLive, PredatorLive) Values ";
-	private StringBuilder printer;
-	
-	Writer(){
-		printer = new StringBuilder();
-	}
-	
-	public void ConseleWrter(){
-		System.out.println(this.printer.toString());
-	}
-
-	public StringBuilder getPrinter() {
-		return printer;
-	}
-
-	public void setPrinter(String printer) {
-		this.printer.append(printer);
-	}
 	
 	public static boolean Connect() {
 		boolean ifHasConnection = true;
@@ -66,7 +48,7 @@ public class Writer {
 		}
 	}
 	
-	public void DBWriter(int AlienLive, int PredatorLive){
+	public static void DBWrite(int AlienLive, int PredatorLive){
 		if(Connect()){
 			if( PredatorLive <= 0 && AlienLive > 0){
 				TableInsert(0, 1, AlienLive, PredatorLive);
@@ -84,5 +66,4 @@ public class Writer {
 		}
 		ConnectionClose();
 	}
-	
 }

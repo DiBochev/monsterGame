@@ -7,6 +7,5 @@ public interface IMonster {
 	void hit(int damage);
 	char getMonsterMark();
 	int[] getCurrentPosition();
-	boolean heal();
 	int[] generateNewCurrentPosition();
 }

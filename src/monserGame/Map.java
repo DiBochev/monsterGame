@@ -8,7 +8,7 @@ public class Map {
 	private final char USEDPOSITIONMARK = '=';
 	private final int MATRIXSIZE = 10;
 	
-	Map(){
+	public Map(){
 		freePositon = new char [MATRIXSIZE][MATRIXSIZE];
 		for (int i = 0; i <MATRIXSIZE; i++) {
 			for (int j = 0; j < MATRIXSIZE; j++) {

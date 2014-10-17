@@ -16,7 +16,6 @@ public class Predator implements IMonster {
 		this.randomnNumber = new Random();
 	}
 	
-	@Override
 	public boolean heal() {
 		if (randomnNumber.nextInt(10)/4 == 0) {
 			this.live += 40;
