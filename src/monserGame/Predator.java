@@ -2,7 +2,7 @@ package monserGame;
 
 import java.util.Random;
 
-public class Predator implements IMonster {
+public class Predator  implements IMonster{
 
 	private int live;
 	private final int DAMAGE = 40;
@@ -47,7 +47,6 @@ public class Predator implements IMonster {
 		return this.position;
 	}
 	
-
 	@Override
 	public int[] generateNewCurrentPosition() {
 			this.position[0] = randomnNumber.nextInt(10);

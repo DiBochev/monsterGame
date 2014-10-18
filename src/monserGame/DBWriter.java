@@ -2,6 +2,7 @@ package monserGame;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -51,9 +52,9 @@ public final class DBWriter {
 	public static void DBWrite(int AlienLive, int PredatorLive){
 		if(Connect()){
 			if( PredatorLive <= 0 && AlienLive > 0){
-				TableInsert(0, 1, AlienLive, PredatorLive);
-			}else if( AlienLive <= 0 && PredatorLive > 0){
 				TableInsert(1, 0, AlienLive, PredatorLive);
+			}else if( AlienLive <= 0 && PredatorLive > 0){
+				TableInsert(0, 1, AlienLive, PredatorLive);
 			}else if( AlienLive <= 0 && PredatorLive <= 0){
 				TableInsert(0, 0, AlienLive, PredatorLive);
 			}
@@ -65,5 +66,53 @@ public final class DBWriter {
 			}
 		}
 		ConnectionClose();
+	}
+
+	public static int MonsterWin(String col){
+		String sqlRequest = "SELECT SUM(" + col + ")" + "AS " + col + " FROM " + TABLENAME;
+		ResultSet resultSet = null;
+		int result = 0;
+		try{
+			resultSet = stmt.executeQuery(sqlRequest);
+			if(resultSet.next()) {
+				result = (resultSet.getInt(col));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static int NumberOfGames(String col){
+		String sqlRequest = "select " + col +" from "  + TABLENAME + " order by " + col + " desc limit 1";
+		ResultSet resultSet = null;
+		int result = 0;
+		try{
+			resultSet = stmt.executeQuery(sqlRequest);
+			if(resultSet.next()) {
+				result = (resultSet.getInt(col));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static String Statistics(){
+		int alienWin = 0, predatorWin = 0, numberOfGames = 0;
+		if(Connect()){
+			alienWin = MonsterWin("alienwin");
+			predatorWin = MonsterWin("predatorwin");
+			numberOfGames = NumberOfGames("numberofgames");
+		}else{
+			try {
+				throw new Exception("cant connect to db");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		ConnectionClose();
+		return "Alen wins: " + alienWin + " Predator wins: " + predatorWin + " from " + numberOfGames + " games";
+		
 	}
 }

@@ -10,14 +10,6 @@ public abstract class Monster implements IMonster {
 	private final char MONSTERMARK = 'P';
 	private Random randomnNumber;
 	
-	public boolean heal() {
-		if (randomnNumber.nextInt(10)/4 == 0) {
-			this.live += 40;
-		}
-		return true;
-
-	}
-	
 	protected void setLife(int life){
 		this.live = life;
 	}

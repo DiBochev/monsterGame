@@ -31,6 +31,7 @@ public class Main {
 		consoleWriter.setPrinter(output);
 		consoleWriter.Write();
 		DBWriter.DBWrite(alien.getLife(), predator.getLife());
+		System.out.println(DBWriter.Statistics());
 		
 	}
 
@@ -51,14 +52,16 @@ public class Main {
 	private static String fight(Predator predator, Alien alien) {
 		StringBuilder sb = new StringBuilder();
 		while (true) {
+			//predator attack
 			alien.hit(predator.getDamage());
 			sb.append("Predator attacked Alien, Alien has: " + alien.getLife() + " live");
 			sb.append(System.getProperty("line.separator"));
-			if(predator.getLife() <= 0){
-				sb.append("Predator is dead, Alien has "+ alien.getLife() + " live");
+			if(alien.getLife() <= 0){
+				sb.append("Alien is dead, Predator has "+ predator.getLife() + " live");
 				sb.append(System.getProperty("line.separator"));
 				break;
 			}
+			//alien attack
 			predator.hit(alien.getDamage());
 			sb.append("Alien attacked Predator, Predator has: " + predator.getLife() + " live");
 			sb.append(System.getProperty("line.separator"));
@@ -67,8 +70,8 @@ public class Main {
 				sb.append(System.getProperty("line.separator"));
 				break;
 			}
-			if(alien.getLife() <= 0){
-				sb.append("Alien is dead, Predator has "+ predator.getLife() + " live");
+			if(predator.getLife() <= 0){
+				sb.append("Predator is dead, Alien has "+ alien.getLife() + " live");
 				sb.append(System.getProperty("line.separator"));
 				break;
 			}
