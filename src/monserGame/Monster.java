@@ -4,11 +4,16 @@ import java.util.Random;
 
 public abstract class Monster implements IMonster {
 	
-	private int live;
-	private final int DAMAGE = 40;
-	private int[] position;
-	private final char MONSTERMARK = 'P';
-	private Random randomnNumber;
+	protected int live;
+	protected final int DAMAGE = 40;
+	protected int[] position;
+	protected Random randomnNumber;
+	
+	public Monster(){
+		this.position = new int[2];
+		this.live = 200;
+		this.randomnNumber = new Random();
+	}
 	
 	protected void setLife(int life){
 		this.live = life;
@@ -38,9 +43,5 @@ public abstract class Monster implements IMonster {
 			this.position[0] = randomnNumber.nextInt(10);
 			this.position[1] = randomnNumber.nextInt(10);
 			return this.position;
-	}
-
-	public char getMonsterMark() {
-		return MONSTERMARK;
 	}
 }
