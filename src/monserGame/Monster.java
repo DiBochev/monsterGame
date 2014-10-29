@@ -5,18 +5,23 @@ import java.util.Random;
 public abstract class Monster implements IMonster {
 	
 	protected int live;
-	protected final int DAMAGE = 40;
+	protected int Damage;
 	protected int[] position;
 	protected Random randomnNumber;
 	
-	public Monster(){
+	public Monster(int live, int damage){
 		this.position = new int[2];
-		this.live = 200;
+		setLife(live);
+		setDamage(damage);
 		this.randomnNumber = new Random();
 	}
 	
 	protected void setLife(int life){
 		this.live = life;
+	}
+	
+	protected void setDamage(int damage){
+		this.Damage = damage;
 	}
 	
 	public void	hit(int damage){
@@ -30,7 +35,7 @@ public abstract class Monster implements IMonster {
 	
 	@Override
 	public int getDamage() {
-		return this.DAMAGE;
+		return this.Damage;
 	}
 	
 	@Override
@@ -44,4 +49,6 @@ public abstract class Monster implements IMonster {
 			this.position[1] = randomnNumber.nextInt(10);
 			return this.position;
 	}
+	
+	public abstract boolean ParticularAction();
 }

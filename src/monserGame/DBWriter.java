@@ -16,41 +16,27 @@ public final class DBWriter {
 	private final static String TABLENAME = "monsters";
 	private final static String TABLEVALUES = " (AlienWin, PredatorWin, AlienLive, PredatorLive) Values ";
 	
-	public static boolean Connect() {
+	public static boolean Connect() throws ClassNotFoundException, SQLException {
 		boolean ifHasConnection = true;
-		try {
 			Class.forName(JDBC_DRIVER);
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			stmt = conn.createStatement();
-		} catch (Exception e) {
-			e.printStackTrace();
-			ifHasConnection = false;
-		}
 		return ifHasConnection;
 	}
 	
-	public static void ConnectionClose(){
-		try {
+	public static void ConnectionClose() throws SQLException{
 			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public static void TableInsert(int AlienWin, int PredatorWin, int alienLive, int predatorLive){
+	public static void TableInsert(int AlienWin, int PredatorWin, int alienLive, int predatorLive) throws SQLException{
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO " + TABLENAME + TABLEVALUES +"('" + AlienWin + "','" + PredatorWin + "','" + alienLive + "','"+ predatorLive + "');");
-		try {
-			stmt = conn.createStatement();
-	      	stmt.executeUpdate(sb.toString());
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		stmt = conn.createStatement();
+	    stmt.executeUpdate(sb.toString());
 	}
 	
-	public static void DBWrite(int AlienLive, int PredatorLive){
-		if(Connect()){
+	public static void DBWrite(int AlienLive, int PredatorLive) throws ClassNotFoundException, SQLException{
+		Connect();
 			if( PredatorLive <= 0 && AlienLive > 0){
 				TableInsert(1, 0, AlienLive, PredatorLive);
 			}else if( AlienLive <= 0 && PredatorLive > 0){
@@ -58,59 +44,37 @@ public final class DBWriter {
 			}else if( AlienLive <= 0 && PredatorLive <= 0){
 				TableInsert(0, 0, AlienLive, PredatorLive);
 			}
-		}else{
-			try {
-				throw new Exception("cant connect to db");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		ConnectionClose();
 	}
 
-	public static int MonsterWin(String col){
+	public static int MonsterWin(String col) throws SQLException{
 		String sqlRequest = "SELECT SUM(" + col + ")" + "AS " + col + " FROM " + TABLENAME;
 		ResultSet resultSet = null;
 		int result = 0;
-		try{
-			resultSet = stmt.executeQuery(sqlRequest);
-			if(resultSet.next()) {
-				result = (resultSet.getInt(col));
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
+		resultSet = stmt.executeQuery(sqlRequest);
+		if(resultSet.next()) {
+			result = (resultSet.getInt(col));
 		}
 		return result;
 	}
 	
-	public static int NumberOfGames(String col){
+	public static int NumberOfGames(String col) throws SQLException{
 		String sqlRequest = "select " + col +" from "  + TABLENAME + " order by " + col + " desc limit 1";
 		ResultSet resultSet = null;
 		int result = 0;
-		try{
-			resultSet = stmt.executeQuery(sqlRequest);
-			if(resultSet.next()) {
-				result = (resultSet.getInt(col));
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
+		resultSet = stmt.executeQuery(sqlRequest);
+		if(resultSet.next()) {
+			result = (resultSet.getInt(col));
 		}
 		return result;
 	}
 	
-	public static String Statistics(){
+	public static String Statistics() throws ClassNotFoundException, SQLException{
 		int alienWin = 0, predatorWin = 0, numberOfGames = 0;
-		if(Connect()){
-			alienWin = MonsterWin("alienwin");
-			predatorWin = MonsterWin("predatorwin");
-			numberOfGames = NumberOfGames("numberofgames");
-		}else{
-			try {
-				throw new Exception("cant connect to db");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		Connect();
+		alienWin = MonsterWin("alienwin");
+		predatorWin = MonsterWin("predatorwin");
+		numberOfGames = NumberOfGames("numberofgames");
 		ConnectionClose();
 		return "Alen wins: " + alienWin + " Predator wins: " + predatorWin + " from " + numberOfGames + " games";
 		
