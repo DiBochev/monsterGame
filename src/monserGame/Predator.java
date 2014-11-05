@@ -40,5 +40,12 @@ public class Predator extends Monster{
 		PredatorPets.add(new Pet(this.MONSTERMARK));
 	}
 
+	public void petSearch(StringBuilder map) {
+		for (Pet pet : PredatorPets) {
+			pet.Move(map);
+		}
+		
+	}
+
 
 }

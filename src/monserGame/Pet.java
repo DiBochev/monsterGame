@@ -23,7 +23,11 @@ public class Pet extends Monster{
 		return this.MonsterMark;
 	}
 
-	public static boolean IfCreateMonster(){
+	private void setLive(int live){
+		this.live = live;
+	}
+	
+	public static boolean IfCreatPet(){
 		Random random = new Random();
 		if((random.nextInt(10) / 4) == 0){
 			return true;
@@ -33,10 +37,19 @@ public class Pet extends Monster{
 	}
 
 	
-	@Override
 	public boolean ParticularAction() {
 		//CoverTree if not get live to master!
-		return false;
+		//setLife(0);
+		return true;
 	}
-
+	
+	public void Move(StringBuilder mapSB){
+		char[] map = mapSB.toString().toCharArray();
+		//CoverTree if not get live to master!
+		//if can attack enemy- attack, 
+		//else if can move to enemy move, 
+		//else give live to Master!
+		
+	}
+	
 }

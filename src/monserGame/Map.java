@@ -41,7 +41,7 @@ public class Map {
 	
 	public boolean CheckIsFreePosition(int[] position){
 		boolean result = true;
-		if (this.freePositon [position[0]][position[1]] == this.USEDPOSITIONMARK) {
+		if (this.freePositon [position[0]][position[1]] != this.FREEPOSITIONMARK) {
 		}
 		else {
 			result = false;

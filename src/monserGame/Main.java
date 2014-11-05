@@ -1,5 +1,7 @@
 package monserGame;
 
+import graph.Graph;
+
 import java.sql.SQLException;
 
 public class Main {
@@ -14,6 +16,8 @@ public class Main {
 	
 		output.append(map.showCurrentMap());
 		output.append("next step\n");
+		Graph graph = new graph.Graph(map.getFreePositon());
+		
 		while(true){
 			monsterStep(predator, alien, map);
 			//show map and monsters current position
@@ -38,8 +42,6 @@ public class Main {
 		} catch (SQLException e) {
 			consoleWriter.Write("cannot connect to DB");
 		}
-		
-		
 	}
 
 	private static void monsterStep(Predator predator, Alien alien, Map map) {
@@ -64,7 +66,8 @@ public class Main {
 			//predator attack
 			boolean IfPredatorMadePet = false;
 			
-			if(Pet.IfCreateMonster()){
+			//create Pet
+			if(Pet.IfCreatPet()){
 				IfPredatorMadePet = true;
 				predator.addPredatorPet();
 				do{
@@ -74,12 +77,22 @@ public class Main {
 				sb.append("Predator made pet");
 				sb.append(System.getProperty("line.separator"));
 				sb.append(map.showCurrentMap());
+				
+				//predator.petSearch(map.showCurrentMap());
+				
+				StringBuilder ss = new StringBuilder();
+				ss.append(map.showCurrentMap());
+				
+				
 				sb.append(System.getProperty("line.separator"));
-			}else{
+			}
+			//attack
+			else{
 			alien.hit(predator.getDamage());
 			sb.append("Predator attacked Alien, Alien has: " + alien.getLife() + " live");
 			sb.append(System.getProperty("line.separator"));
 			}
+			
 			
 			
 			if(alien.getLife() <= 0){
