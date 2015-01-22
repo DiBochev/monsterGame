@@ -1,4 +1,4 @@
-package monserGame;
+package com.monsterGame.Monsters;
 
 public interface IMonster {
 	
@@ -7,5 +7,6 @@ public interface IMonster {
 	void hit(int damage);
 	char getMonsterMark();
 	int[] getCurrentPosition();
-	int[] generateNewCurrentPosition();
+	int[] generateNewCurrentPosition(int matrixSize);
+	boolean specialAction();
 }

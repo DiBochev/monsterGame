@@ -1,4 +1,4 @@
-package monserGame;
+package com.monsterGame.Monsters;
 
 import java.util.Random;
 
@@ -37,7 +37,7 @@ public class Pet extends Monster{
 	}
 
 	
-	public boolean ParticularAction() {
+	public boolean specialAction() {
 		//CoverTree if not get live to master!
 		//setLife(0);
 		return true;

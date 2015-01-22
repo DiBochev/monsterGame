@@ -5,36 +5,30 @@ import java.util.ArrayList;
 public class Graph {
  
     private ArrayList<Node> nodes;
-    private ArrayList<Edge> edges;
     
     public Graph(char[][] map){
     	nodes = new ArrayList<Node>();
-    	edges = new ArrayList<Edge>();
     	generateNodes(map);
-    	generateEdges();
-    	
-    	
+    	generateChilds();
     }
     
-    private void generateEdges(){
+    private void generateChilds(){
     	for (Node node : nodes) {
 			Node temp = new Node(node.getPositionX() - 1, node.getPositionY());
-			chekEdgeAndAdd(node, temp);
+			chekAndAdd(node, temp);
 			temp = new Node(node.getPositionX() + 1, node.getPositionY());
-			chekEdgeAndAdd(node, temp);
+			chekAndAdd(node, temp);
 			temp = new Node(node.getPositionX(), node.getPositionY() - 1);
-			chekEdgeAndAdd(node, temp);
+			chekAndAdd(node, temp);
 			temp = new Node(node.getPositionX(), node.getPositionY() + 1);
-			chekEdgeAndAdd(node, temp);
+			chekAndAdd(node, temp);
 		}
     }
 
-	private void chekEdgeAndAdd(Node node, Node temp) {
+	private void chekAndAdd(Node node, Node temp) {
 		if (IfExistNode(temp)) {
-			if(!IfExistEdge(temp, node)){
-				addEdge(temp, node);
+				node.addChild(temp);
 			}
-		}
 	}
     
     private void generateNodes(char[][] map){
@@ -56,10 +50,6 @@ public class Graph {
         nodes.add(new Node(x, y));
     }
     
-    private void addEdge(Node firstNode, Node secondNode){
-    	edges.add(new Edge(firstNode, secondNode));
-    }
-    
     private boolean IfExistNode(Node a){
     	boolean result = false;
     	for (Node node : nodes) {
@@ -70,15 +60,4 @@ public class Graph {
 		}
 		return result;
 	}
-
-    private boolean IfExistEdge(Node a, Node b){
-    	boolean result = false;
-    	for (Edge edge : edges) {
-			if(edge.equals(a, b)){
-				result = true;
-				break;
-			}
-		}
-    	return result;
-    }
 }

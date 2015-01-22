@@ -1,4 +1,4 @@
-package monserGame;
+package com.monsterGame.Monsters;
 
 import java.util.ArrayList;
 
@@ -14,11 +14,12 @@ public class Predator extends Monster{
 		this.PredatorPets = new ArrayList<Pet>();
 	}
 	
-	public boolean ParticularAction() {
+	public boolean specialAction() {
 		if (randomnNumber.nextInt(10)/4 == 0) {
 			this.live += 40;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override

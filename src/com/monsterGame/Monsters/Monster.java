@@ -1,4 +1,4 @@
-package monserGame;
+package com.monsterGame.Monsters;
 
 import java.util.Random;
 
@@ -44,11 +44,11 @@ public abstract class Monster implements IMonster {
 	}
 
 	@Override
-	public int[] generateNewCurrentPosition() {
-			this.position[0] = randomnNumber.nextInt(10);
-			this.position[1] = randomnNumber.nextInt(10);
+	public int[] generateNewCurrentPosition(int matrixSize) {
+			this.position[0] = randomnNumber.nextInt(matrixSize);
+			this.position[1] = randomnNumber.nextInt(matrixSize);
 			return this.position;
 	}
 	
-	public abstract boolean ParticularAction();
+	public abstract boolean specialAction();
 }

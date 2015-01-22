@@ -1,49 +1,49 @@
 package graph;
 
+import java.util.ArrayList;
+
 public class Node {
     
 	private int positionX;
 	private int positionY;
-	protected boolean visited;
+	private boolean visited;
+	private ArrayList<Node> childs;
      
     public Node(int x, int y) {
-        setPositionX(x);
+        childs = new ArrayList<Node>();
+    	setPositionX(x);
         setPositionY(y);
     }
      
-    public boolean isVisited() {
+    protected boolean isVisited() {
         return visited;
     }
      
-    public void visit() {
+    protected void visit() {
         visited = true;
     }
      
-    public void unvisit() {
+    protected void unvisit() {
         visited = false;
     }
 
-	
-    public int getPositionX() {
+    protected int getPositionX() {
 		return positionX;
 	}
     
-
-	private void setPositionX(int positionX) {
+    protected void setPositionX(int positionX) {
 		this.positionX = positionX;
 	}
 	
-
-	public int getPositionY() {
+    protected int getPositionY() {
 		return positionY;
 	}
 	
-
 	private void setPositionY(int positionY) {
 		this.positionY = positionY;
 	}
 
-	public boolean equals(Node node) {
+	protected boolean equals(Node node) {
 		if((node.getPositionX() == getPositionX()) && (node.getPositionY() == getPositionY())){
 			return true;
 		}else{
@@ -51,5 +51,7 @@ public class Node {
 		}
 	}  
 
-	
+	protected void addChild(Node node){
+		childs.add(node);
+	}
 }

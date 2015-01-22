@@ -1,4 +1,4 @@
-package monserGame;
+package com.monsterGame.DBManager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
