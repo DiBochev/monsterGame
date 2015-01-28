@@ -1,31 +1,42 @@
 package com.monsterGame.DBManager;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public final class DBWriter {
-	private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private final static String DB_URL = "jdbc:mysql://localhost/monstergame";
-	private final static String USER = "fgg";
+public final class DBManager {
+	private final static String JDBC_DRIVER = "org.postgresql.Driver";  
+	private final static String DB_URL = "jdbc:postgresql://localhost:5432/monstergame";
+	private final static String USER = "postgres";
 	private final static String PASS = "dbpassword";
 	private static Connection conn = null;
 	private static Statement stmt = null;
 	private final static String TABLENAME = "monsters";
 	private final static String TABLEVALUES = " (AlienWin, PredatorWin, AlienLive, PredatorLive) Values ";
+	private final static String DB_URL_NO_FULL_LING = "CREATE TABLE " +  TABLENAME + "(numberofgames SERIAL UNIQUE, AlienWin int, PredatorWin int, AlienLive int, PredatorLive int);";
 	
-	public static boolean Connect() throws ClassNotFoundException, SQLException {
-		boolean ifHasConnection = true;
-			Class.forName(JDBC_DRIVER);
-			conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			stmt = conn.createStatement();
-		return ifHasConnection;
+	private DBManager(){
 	}
+	
+	public static void Connect() throws ClassNotFoundException, SQLException {
+				Class.forName(JDBC_DRIVER);
+				conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				stmt = conn.createStatement();
+			}
 	
 	public static void ConnectionClose() throws SQLException{
 			conn.close();
+	}
+	
+	public static void createNewTable() throws SQLException, ClassNotFoundException{
+		Connect();
+		
+		stmt.execute(DB_URL_NO_FULL_LING);
+		
+		ConnectionClose();
 	}
 	
 	public static void TableInsert(int AlienWin, int PredatorWin, int alienLive, int predatorLive) throws SQLException{

@@ -3,7 +3,7 @@ package com.monsterGame.Main;
 import java.sql.SQLException;
 
 import com.monsterGame.ConsoleWriter.ConsoleWriter;
-import com.monsterGame.DBManager.DBWriter;
+import com.monsterGame.DBManager.DBManager;
 import com.monsterGame.Map.Map;
 import com.monsterGame.Monsters.Alien;
 import com.monsterGame.Monsters.IMonster;
@@ -49,13 +49,22 @@ public class Main {
 		
 		ConsoleWriter.Write(output);
 		
+//		try {
+//			DBManager.createNewTable();
+//		} catch (ClassNotFoundException | SQLException e1) {
+//			System.out.println("creating table");
+//			e1.printStackTrace();
+//		}
+		
 		try {
-			DBWriter.DBWrite(alien.getLife(), predator.getLife());
-			System.out.println(DBWriter.Statistics());
+			DBManager.DBWrite(alien.getLife(), predator.getLife());
+			System.out.println(DBManager.Statistics());
 		} catch (ClassNotFoundException e) {
 			ConsoleWriter.Write("cannot find driver!/n cannot connect to DB");
 		} catch (SQLException e) {
 			ConsoleWriter.Write("cannot connect to DB");
+			e.printStackTrace();
+			
 		}
 	}
 	
