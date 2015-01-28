@@ -33,9 +33,7 @@ public final class DBManager {
 	
 	public static void createNewTable() throws SQLException, ClassNotFoundException{
 		Connect();
-		
 		stmt.execute(DB_URL_NO_FULL_LING);
-		
 		ConnectionClose();
 	}
 	

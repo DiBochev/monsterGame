@@ -2,6 +2,8 @@ package com.monsterGame.Main;
 
 import java.sql.SQLException;
 
+import org.postgresql.util.PSQLException;
+
 import com.monsterGame.ConsoleWriter.ConsoleWriter;
 import com.monsterGame.DBManager.DBManager;
 import com.monsterGame.Map.Map;
@@ -49,22 +51,25 @@ public class Main {
 		
 		ConsoleWriter.Write(output);
 		
-//		try {
-//			DBManager.createNewTable();
-//		} catch (ClassNotFoundException | SQLException e1) {
-//			System.out.println("creating table");
-//			e1.printStackTrace();
-//		}
-		
+		DBWrite();
+	}
+	
+	private static void DBWrite(){
 		try {
 			DBManager.DBWrite(alien.getLife(), predator.getLife());
 			System.out.println(DBManager.Statistics());
 		} catch (ClassNotFoundException e) {
 			ConsoleWriter.Write("cannot find driver!/n cannot connect to DB");
+		} catch (PSQLException e) {
+			ConsoleWriter.Write("cannot connect to DB\ncreating new table...");
+			try {
+				DBManager.createNewTable();
+				DBWrite();
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
+			}
 		} catch (SQLException e) {
-			ConsoleWriter.Write("cannot connect to DB");
 			e.printStackTrace();
-			
 		}
 	}
 	
